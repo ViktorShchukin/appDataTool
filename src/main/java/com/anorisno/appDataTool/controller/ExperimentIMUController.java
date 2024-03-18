@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/umi/experiment")
+@RequestMapping(value = "/imu/experiment")
 public class ExperimentIMUController {
 
     private final ExperimentService experimentService;

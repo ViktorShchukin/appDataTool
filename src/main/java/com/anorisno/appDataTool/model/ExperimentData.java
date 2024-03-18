@@ -4,13 +4,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "experiment_data")
 public class ExperimentData {
@@ -19,7 +23,7 @@ public class ExperimentData {
     private UUID id;
 
     @Column(name = "experiment_id")
-    private String experimentId;
+    private UUID experimentId;
 
     @Column(name = "acc_x")
     private double accx;
