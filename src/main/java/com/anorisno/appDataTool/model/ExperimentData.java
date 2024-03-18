@@ -31,7 +31,7 @@ public class ExperimentData {
     private double accz;
 
     @Column(name = "value_timestamp")
-    private long valueTimestamp; //todo instant or zonedDateTime
+    private long valueTimestamp;
 
 
 }

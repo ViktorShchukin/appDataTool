@@ -5,7 +5,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 
-//todo add path variable to all points
+//todo add path variable to all endpoints
 @RestController
 @RequestMapping(value = "/imu/experiment/{experimentId}/data")
 public class ExperimentDataIMUController {
