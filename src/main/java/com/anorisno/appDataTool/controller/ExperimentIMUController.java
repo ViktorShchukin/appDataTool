@@ -58,7 +58,6 @@ public class ExperimentIMUController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") UUID id) {
         experimentService.delete(id);
-        //todo what need to return?
         return ResponseEntity.noContent().build();
     }
 }

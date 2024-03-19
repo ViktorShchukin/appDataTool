@@ -20,9 +20,9 @@ import java.util.UUID;
 public class Experiment {
 
     @Id
-    private UUID id; //todo in database it has uuid type. need to be matched
+    private UUID id;
 
-    @Column(name = "name") //todo add colunm to all properties
+    @Column(name = "name")
     private String name;
 
     @Column(name = "phone_brand")
@@ -35,7 +35,7 @@ public class Experiment {
     private String phoneSerial;
 
     @Column(name = "ex_timestamp")
-    private ZonedDateTime exTimestamp; //todo instant or zoned datetime???
+    private ZonedDateTime exTimestamp;
 
     @Column(name = "comment")
     private String comment;
