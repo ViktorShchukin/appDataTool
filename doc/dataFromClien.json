@@ -1,0 +1,15 @@
+{
+  "name": "string //i don't know, maybe it need to be generated???",
+  "phoneBrand": "string",
+  "phoneModel": "string",
+  "phoneSerial": "string",
+  "exTimestamp": "long",
+  "values": [
+    {
+      "accx": "double",
+      "accy": "double",
+      "accz": "double",
+      "valueTimestamp": "long"
+    }
+  ]
+}
