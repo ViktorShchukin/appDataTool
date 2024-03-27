@@ -9,10 +9,6 @@ import java.util.List;
 @Data
 public class ExperimentWithDataDTO {
 
-    private String name;
-    private String phoneBrand;
-    private String phoneModel;
-    private String phoneSerial;
-    private ZonedDateTime exTimestamp;
-    private List<DataDTO> values;
+    private ExperimentDTO experiment;
+    private List<DataDTO> dataList;
 }

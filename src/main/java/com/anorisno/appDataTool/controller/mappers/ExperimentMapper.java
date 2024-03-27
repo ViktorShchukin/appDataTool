@@ -24,20 +24,21 @@ public interface ExperimentMapper {
 //    @Mapping(target = "comment", source = "comment")
     ExperimentDTO mapToDTO(Experiment experiment);
 
+    @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID())")
     Experiment mapFromDTO(ExperimentDTO dto);
 
     List<ExperimentDTO> mapToDTO(List<Experiment> dtoList);
 
 //    ExperimentWithDataDTO mapToExperimentWithDataDTO ();
 
-    @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID())")
-    @Mapping(target = "comment", ignore = true)
-    @Mapping(target = "name", source = "name")
-    @Mapping(target = "phoneBrand", source = "phoneBrand")
-    @Mapping(target = "phoneModel", source = "phoneModel")
-    @Mapping(target = "phoneSerial", source = "phoneSerial")
-    @Mapping(target = "exTimestamp", source = "exTimestamp")
-    Experiment getExperimentFromExperimentWithDataDTO(ExperimentWithDataDTO experimentWithDataDTO);
+//    @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID())")
+//    @Mapping(target = "comment", ignore = true)
+//    @Mapping(target = "name", source = "name")
+//    @Mapping(target = "phoneBrand", source = "phoneBrand")
+//    @Mapping(target = "phoneModel", source = "phoneModel")
+//    @Mapping(target = "phoneSerial", source = "phoneSerial")
+//    @Mapping(target = "exTimestamp", source = "exTimestamp")
+//    Experiment getExperimentFromExperimentWithDataDTO(ExperimentWithDataDTO experimentWithDataDTO);
 
     List<ExperimentData> getAllExperimentDataFromExperimentWithDataDTO(List<DataDTO> experimentWithDataDTO, @Context UUID expId);
 

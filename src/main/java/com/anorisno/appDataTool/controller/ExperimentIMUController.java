@@ -6,6 +6,8 @@ import com.anorisno.appDataTool.controller.mappers.ExperimentMapper;
 import com.anorisno.appDataTool.model.Experiment;
 import com.anorisno.appDataTool.model.ExperimentData;
 import com.anorisno.appDataTool.service.ExperimentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ public class ExperimentIMUController {
 
     private final ExperimentService experimentService;
     private final ExperimentMapper experimentMapper;
+    private final ObjectMapper objectMapper;
 
     @GetMapping()
     public ResponseEntity<List<ExperimentDTO>> getAll() {
@@ -66,10 +69,20 @@ public class ExperimentIMUController {
 
     @PostMapping(value = "/withdata")
     public ResponseEntity<ExperimentDTO> createWithData(@NonNull @RequestBody ExperimentWithDataDTO body){
-        Experiment experiment = experimentMapper.getExperimentFromExperimentWithDataDTO(body);
+        Experiment experiment = experimentMapper.mapFromDTO(body.getExperiment());
         List<ExperimentData> experimentDataList = experimentMapper
-                .getAllExperimentDataFromExperimentWithDataDTO(body.getValues(), experiment.getId());
+                .getAllExperimentDataFromExperimentWithDataDTO(body.getDataList(), experiment.getId());
         Experiment result = experimentService.createWithData(experiment, experimentDataList);
         return ResponseEntity.status(HttpStatus.CREATED).body(experimentMapper.mapToDTO(result));
     }
+
+//    @PostMapping(value = "/withdata")
+//    public ResponseEntity<ExperimentDTO> createWithData(@NonNull @RequestBody String body) throws JsonProcessingException {
+//        ExperimentWithDataDTO dto = objectMapper.readValue(body, ExperimentWithDataDTO.class);
+//        Experiment experiment = experimentMapper.getExperimentFromExperimentWithDataDTO(dto);
+//        List<ExperimentData> experimentDataList = experimentMapper
+//                .getAllExperimentDataFromExperimentWithDataDTO(dto.getValues(), experiment.getId());
+//        Experiment result = experimentService.createWithData(experiment, experimentDataList);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(experimentMapper.mapToDTO(result));
+//    }
 }
