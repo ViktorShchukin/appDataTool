@@ -10,6 +10,7 @@ public class ExperimentDataDTO {
 
     private UUID id;
     private UUID experimentId;
+    private String sensorType;
     private double accx;
     private double accy;
     private double accz;

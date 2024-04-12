@@ -35,6 +35,7 @@ public class ExperimentDataService {
         ExperimentData newExperimentData = experimentDataTool.create(
                 experimentData.getId(),
                 experimentData.getExperimentId(),
+                experimentData.getSensorType(),
                 experimentData.getAccx(),
                 experimentData.getAccy(),
                 experimentData.getAccz(),

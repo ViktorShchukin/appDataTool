@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import accessdata as ad
 import dataprocessing as dp
 
-
+Y_CORRECTION_COFFECIENT = -0.012510325012303423
 
 def print_fig(x: list, y: list, label_new: str, title: str):
 	#default for settings
@@ -20,13 +20,16 @@ def print_fig(x: list, y: list, label_new: str, title: str):
 	plt.show()
 
 if __name__ == '__main__':
-	for j in range(1,7):
-		accx, accy, accz, timestamp = ad.get_data(name = "row_data_100_2_" + str(j))
+	# for j in range(1,7):
+		accx, accy, accz, timestamp = ad.get_data(name = "stright_new_100_3_1", sensor_type = "android.sensor.linear_acceleration") #android.sensor.linear_acceleration/gyroscope
+		
+		for i in range(len(accy)):
+			accy[i] -= Y_CORRECTION_COFFECIENT
 		accy_correct = list()
-		kalman_filter = dp.KalmanFilter(q = 0.1, r = 0.5, f = 1.0, h = 1.0)
+		kalman_filter = dp.KalmanFilter(q = 2, r = 15, f = 1.0, h = 1.0)
 		for i in range(len(accy)):
 			accy_correct.append(kalman_filter.correct(accy[i]))
-		velocity_y = dp.get_velocity(accy_correct, timestamp)
+		velocity_y = dp.get_velocity(accy, timestamp)
 		distance_y = dp.get_distance(velocity_y, timestamp)
 
 
@@ -40,7 +43,8 @@ if __name__ == '__main__':
 		ax.set_ylim(top = 2, bottom = -1.5)
 
 		# ax.plot(timestamp, accy, label = "accy", marker = "o")
-		ax.plot(timestamp, accy_correct, label = "accy_correct", marker = "d")
+		ax.plot(timestamp, accy, label = "accy_y", marker = "d")
+		# ax.plot(timestamp, accx, label = "accy_y", marker = "d")
 		ax.plot(timestamp, distance_y, label = "distance", color = "r")
 
 		ax2 = ax.twinx()

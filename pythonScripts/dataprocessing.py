@@ -54,13 +54,16 @@ def get_velocity(coll_acc: list, coll_timestamp: list):
 
 def get_distance(coll_acc: list, coll_timestamp: list):
 	i = 0
-	velocity = list()
-	velocity.append(0)
+	distance = list()
+	distance.append(0)
 	while i < (len(coll_acc)-1):
 		i += 1
-		velocity_delta = (coll_acc[i] + coll_acc[i-1]) / 2 * (coll_timestamp[i] - coll_timestamp[i-1]) / 1e9
-		velocity.append(velocity[i-1] + velocity_delta)
-	return velocity
+		distance_delta = (coll_acc[i] + coll_acc[i-1]) / 2 * (coll_timestamp[i] - coll_timestamp[i-1]) / 1e9
+		distance.append(distance[i-1] + distance_delta)
+	return distance
+
+def get_velocity_delta():
+	pass
 
 
 

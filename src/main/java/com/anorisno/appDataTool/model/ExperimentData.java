@@ -25,6 +25,9 @@ public class ExperimentData {
     @Column(name = "experiment_id")
     private UUID experimentId;
 
+    @Column(name = "sensor_type")
+    private String sensorType;
+
     @Column(name = "acc_x")
     private double accx;
 

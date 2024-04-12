@@ -13,6 +13,7 @@ public interface ExperimentDataTool {
 
     ExperimentData create(UUID id,
                           UUID experimentId,
+                          String sensorType,
                           double accx,
                           double accy,
                           double accz,

@@ -45,6 +45,7 @@ public interface ExperimentMapper {
 
     @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID())")
     @Mapping(target = "experimentId", expression = "java(expId)")
+    @Mapping(target = "sensorType", source = "dataDTO.sensorType")
     @Mapping(target = "accx", source = "dataDTO.accx")
     @Mapping(target = "accy", source = "dataDTO.accy")
     @Mapping(target = "accz", source = "dataDTO.accz")
