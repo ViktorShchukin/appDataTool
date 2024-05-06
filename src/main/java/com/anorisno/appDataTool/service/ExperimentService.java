@@ -30,10 +30,12 @@ public class ExperimentService {
     public List<Experiment> findAll() {return experimentRepository.findAll();
     }
 
+    @Transactional
     public Optional<Experiment> getById(UUID id) {
         return experimentRepository.findById(id);
     }
 
+    @Transactional
     public Experiment create(Experiment experiment) {
         Experiment newExperiment = experimentTool.create(
             experiment.getId(), //todo what id id is null?
@@ -47,6 +49,7 @@ public class ExperimentService {
         return experimentRepository.save(newExperiment);
     }
 
+    @Transactional
     public Optional<Experiment> update(UUID id, Experiment experiment) {
         //todo check if id == experiment.getId
         return experimentRepository.findById(id)
@@ -54,10 +57,12 @@ public class ExperimentService {
                 .map(experimentRepository::save);
     }
 
+    @Transactional
     public void delete(UUID id) {
         experimentRepository.deleteById(id);
     }
 
+    @Transactional
     public Experiment createWithData(Experiment experiment, List<ExperimentData> experimentDataList){
         Experiment newExperiment = experimentTool.create(
                 experiment.getId(), //todo what id id is null?
