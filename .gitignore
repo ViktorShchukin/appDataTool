@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Puthon ###
+pythonScripts/env
+pythonScripts/figures
+**/__pycache__

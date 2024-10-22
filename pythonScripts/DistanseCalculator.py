@@ -31,9 +31,9 @@ class DistanseCalculator:
         self.lastGyroscopeData: SensorData
         self.lastAccelerationData: SensorData
 
-        self.listAcceleration = [[], [], []]
-        self.listVelosity = []
-        self.listDistance = []
+        self.listAcceleration = [[], [], [], []]
+        self.listVelosity = [[],[],[]]
+        self.listDistance = [[],[],[]]
         self.listTimestamp = []
 
         self.isFirstDataGyro: bool = True
@@ -64,10 +64,11 @@ class DistanseCalculator:
                 self.evalueteAcceleration(
                     self.lastAccelerationData, self.rotate(data))
                 self.lastAccelerationData = self.rotate(data)
-                self.listAcceleration[0].append(self.lastAccelerationData.y)
-                self.listAcceleration[1].append(
+                self.listAcceleration[0].append(self.lastAccelerationData.x)
+                self.listAcceleration[1].append(self.lastAccelerationData.y)
+                self.listAcceleration[2].append(self.lastAccelerationData.z)
+                self.listAcceleration[3].append(
                     self.lastAccelerationData.timestamp)
-                self.listAcceleration[2].append(self.lastAccelerationData.x)
 
     def integral(self, valueBefore: int, valueLast: int, timestampBefore: int, timestampLast: int):
         delta = (valueLast + valueBefore)/2 * \
@@ -107,8 +108,14 @@ class DistanseCalculator:
         self.distanse[1] += delta_distance_y
         self.distanse[2] += delta_distance_z
 
-        self.listVelosity.append(self.lastVelosity[1]+delta_velocity_y)
-        self.listDistance.append(self.distanse[1]+delta_distance_y)
+        self.listVelosity[0].append(self.lastVelosity[0]+delta_velocity_x)
+        self.listVelosity[1].append(self.lastVelosity[1]+delta_velocity_y)
+        self.listVelosity[2].append(self.lastVelosity[2]+delta_velocity_z)
+
+        self.listDistance[0].append(self.distanse[0]+delta_distance_x)
+        self.listDistance[1].append(self.distanse[1]+delta_distance_y)
+        self.listDistance[2].append(self.distanse[2]+delta_distance_z)
+
         self.listTimestamp.append(dataLast.timestamp)
 
     def getRotationMatrix(self):
@@ -155,7 +162,7 @@ def mult_matrix(a: list[list], b: list[list]):
 
 if __name__ == '__main__':
     cal = DistanseCalculator()
-    dataList = accessdata.get_data_row(name="rotate_old_1_3")
+    dataList = accessdata.get_data_row(name="aroundme_1")
     for i in range(len(dataList)):
         cal.saveData(dataList[i])
 
@@ -183,10 +190,17 @@ if __name__ == '__main__':
     velocity_y = dp.get_velocity(
         cal.listAcceleration[0], cal.listAcceleration[1])
 
-    ax.plot(cal.listAcceleration[1],
-            cal.listAcceleration[0], label="accy_y", marker="d")
-    ax.plot(cal.listTimestamp, cal.listVelosity, label="vel_y", marker="o")
-    ax.plot(cal.listTimestamp, cal.listDistance, label="dist_y", marker="^")
+    # ax.plot(cal.listAcceleration[1], cal.listAcceleration[0], label="accy_y", marker="d")
+    ax.plot(cal.listTimestamp, cal.listVelosity[1], label="vel_y")
+    ax.plot(cal.listTimestamp, cal.listDistance[1], label="dist_y", marker="^")
+
+    ax.plot(cal.listTimestamp, cal.listVelosity[0], label="vel_x")
+    ax.plot(cal.listTimestamp, cal.listDistance[0], label="dist_x", marker="^")
+
+    # ax.plot(cal.listTimestamp, cal.listVelosity[2], label="vel_z", marker="o")
+    # ax.plot(cal.listTimestamp, cal.listDistance[2], label="dist_z", marker="^")
+
+    plt.legend()
 
     plt.show()
     # print(cal.getRotationMatrix())
