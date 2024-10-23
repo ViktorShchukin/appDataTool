@@ -1,4 +1,4 @@
-package com.anorisno.appDataTool;
+package com.anorisno.appDataTool.integrated;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

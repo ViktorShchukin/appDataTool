@@ -12,11 +12,19 @@ import java.time.ZonedDateTime;
 @Service
 public class PhotoService {
 
+    private final static String DEFAULT_PATH_FOR_PHOTO = "./pythonScripts/photoFromApp/";
+
     public PhotoService() {
     }
 
     public void savePhoto(InputStream stream) throws IOException {
-        File photo = new File(NameTool.createNameForPhoto());
+        savePhoto(stream, DEFAULT_PATH_FOR_PHOTO);
+    }
+
+    public void savePhoto(InputStream stream, String path) throws IOException {
+        File photo = new File(path + NameTool.createNameForPhoto());
+        photo.getParentFile().mkdirs();
+        photo.createNewFile();
         try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(photo))) {
             stream.transferTo(outputStream);
         }
