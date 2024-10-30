@@ -2,6 +2,7 @@ package com.anorisno.appDataTool.controller;
 
 import com.anorisno.appDataTool.service.PhotoService;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,11 @@ import java.io.InputStream;
 @RequestMapping("/photo")
 public class PhotoReceiverController {
 
-    private final Logger log;
+    private final Logger log = LoggerFactory.getLogger(PhotoReceiverController.class);
 
     private final PhotoService photoService;
 
-    public PhotoReceiverController(Logger log, PhotoService photoService) {
-        this.log = log;
+    public PhotoReceiverController(PhotoService photoService) {
         this.photoService = photoService;
     }
 
