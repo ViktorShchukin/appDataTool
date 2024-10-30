@@ -36,3 +36,6 @@ build/
 pythonScripts/env
 pythonScripts/figures
 **/__pycache__
+
+### this project sustom ###
+/pythonScripts/photoFromApp/
