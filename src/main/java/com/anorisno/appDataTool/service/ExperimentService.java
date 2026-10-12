@@ -77,5 +77,16 @@ public class ExperimentService {
         experimentDataList.forEach(experimentDataService::create);//todo saveall
         return saved;
     }
+
+    public Experiment getByName(String experimentName) {
+        return experimentRepository.getByName(experimentName)
+                .orElseThrow(() -> new RuntimeException("Invalid experiment name"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<ExperimentData> getByExperimentName(String experimentName) {
+        var ex = getByName(experimentName);
+        return experimentDataService.getAllByExperimentId(ex.getId());
+    }
 }
 

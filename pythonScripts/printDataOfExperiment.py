@@ -56,6 +56,11 @@ def plot_velocity(ax, timestamp, acc, velocity, distance):
     # ax.set_title("accy + correct 100cm on floor\nsamle: 1")
 
 def plot_gyro(ax, timestamp, velocity, angle):
+
+#     print(ax)
+#     print(timestamp)
+#     print(velocity)
+#     print(angle)
     ax.grid(color='grey', linestyle='--', linewidth=0.5)
 
     ax.plot(timestamp, velocity, label="velocity", marker="d")
@@ -64,18 +69,14 @@ def plot_gyro(ax, timestamp, velocity, angle):
 if __name__ == '__main__':
     # for j in range(1,7):
     # android.sensor.linear_acceleration/gyroscope
-    experimnet_name = "aroundme_3"# "zigzag_1"
+    experimnet_name = "rest"# "zigzag_1"
     accx, accy, accz, acc_timestamp = ad.get_data(
         name=experimnet_name,
         sensor_type="android.sensor.linear_acceleration")
 
-    radx, rady, radz, gyro_timestamp = ad.get_data(
-    	name = experimnet_name,
-    	sensor_type = "android.sensor.gyroscope")
-
     # for i in range(len(accy)):
     # accy[i] -= Y_CORRECTION_COFFECIENT
-    accy_correct = list()
+#     accy_correct = list()
     # kalman_filter = dp.KalmanFilter(q=2, r=15, f=1.0, h=1.0)
     # for i in range(len(accy)):
     # accy_correct.append(kalman_filter.correct(accy[i]))
@@ -91,9 +92,9 @@ if __name__ == '__main__':
     distance_y = dp.get_distance(velocity_y, acc_timestamp)
     distance_z = dp.get_distance(velocity_z, acc_timestamp)
 
-    angle_x = dp.get_distance(radx, gyro_timestamp)
-    angle_y = dp.get_distance(rady, gyro_timestamp)
-    angle_z = dp.get_distance(radz, gyro_timestamp)
+#     angle_x = dp.get_distance(radx, gyro_timestamp)
+#     angle_y = dp.get_distance(rady, gyro_timestamp)
+#     angle_z = dp.get_distance(radz, gyro_timestamp)
 
     # print_fig(x = timestamp, y = accy_correct, label_new = "accy_correct", title = "accy 100cm on floor\ncorrect samle: 1")
 
@@ -117,20 +118,3 @@ if __name__ == '__main__':
     	acc = accz,
     	velocity = velocity_z,
     	distance = distance_z)
-
-    plot_gyro(
-    	ax = ax[0,1],
-    	timestamp = gyro_timestamp,
-    	velocity = radx,
-    	angle = angle_x)
-    plot_gyro(
-    	ax = ax[1,1],
-    	timestamp = gyro_timestamp,
-    	velocity = rady,
-    	angle = angle_y)
-    plot_gyro(
-    	ax = ax[2,1],
-    	timestamp = gyro_timestamp,
-    	velocity = radz,
-    	angle = angle_z)
-    plt.show()
