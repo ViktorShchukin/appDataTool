@@ -10,11 +10,15 @@ import java.util.Map;
 public class Ins {
 
     private InsState state;
-    private Double SPEED_CORRECTION = -1.9;
 
     public void onAcceleration(SensorData sensorData, List<SensorData> calibratingData) {
         if (state == null) {
             init(sensorData.timestamp());
+        }
+
+        // skip unordered
+        if(state.timestamp() > sensorData.timestamp()) {
+            return;
         }
 
         double[] filtered = filterAcc(sensorData.data(), calibratingData);
@@ -46,6 +50,10 @@ public class Ins {
 
     public void updateOrientation(SensorData rotation) {
         if (state == null) {
+            return;
+        }
+        // skip unordered
+        if(state.timestamp() > rotation.timestamp()) {
             return;
         }
         state = state.withOrientation(rotation.data());
