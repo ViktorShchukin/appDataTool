@@ -53,7 +53,6 @@ public class SensorCalibrationUtils {
     }
 
 
-
     static public double getAxisValue(ExperimentData data, String axis) {
         return switch (axis.toLowerCase()) {
             case "x" -> data.getAccx();
@@ -102,8 +101,12 @@ public class SensorCalibrationUtils {
                     SensorData.SensorType type = SensorData.SensorType.valueOf(parts[0].trim());
 
                     // Column 1: timestamp
-                    Double timestamp = Double.parseDouble(parts[1].trim());
-
+                    Long timestamp;
+                    if (type.equals(SensorData.SensorType.TYPE_LINEAR_ACCELERATION)) {
+                        timestamp = Long.parseLong(parts[1].trim());
+                    } else {
+                        timestamp = (long) Double.parseDouble(parts[1].trim());
+                    }
                     // Column 2, 3, 4: x, y, z
                     Double x = Double.parseDouble(parts[2].trim());
                     Double y = Double.parseDouble(parts[3].trim());
@@ -121,30 +124,32 @@ public class SensorCalibrationUtils {
         return records;
     }
 
-    /** Helper function to convert a rotation vector to a rotation matrix.
-     *  Given a rotation vector (presumably from a ROTATION_VECTOR sensor), returns a
-     *  9  or 16 element rotation matrix in the array R.  R must have length 9 or 16.
-     *  If R.length == 9, the following matrix is returned:
+    /**
+     * Helper function to convert a rotation vector to a rotation matrix.
+     * Given a rotation vector (presumably from a ROTATION_VECTOR sensor), returns a
+     * 9  or 16 element rotation matrix in the array R.  R must have length 9 or 16.
+     * If R.length == 9, the following matrix is returned:
      * <pre>
      *   /  R[ 0]   R[ 1]   R[ 2]   \
      *   |  R[ 3]   R[ 4]   R[ 5]   |
      *   \  R[ 6]   R[ 7]   R[ 8]   /
-     *</pre>
+     * </pre>
      * If R.length == 16, the following matrix is returned:
      * <pre>
      *   /  R[ 0]   R[ 1]   R[ 2]   0  \
      *   |  R[ 4]   R[ 5]   R[ 6]   0  |
      *   |  R[ 8]   R[ 9]   R[10]   0  |
      *   \  0       0       0       1  /
-     *</pre>
-     *  @param rotationVector the rotation vector to convert
+     * </pre>
+     *
+     * @param rotationVector the rotation vector to convert
      */
     public static double[] getRotationMatrixFromVector(double[] rotationVector) {
 
         double[] R = new double[]{
-                0,0,0,
-                0,0,0,
-                0,0,0
+                0, 0, 0,
+                0, 0, 0,
+                0, 0, 0
         };
 
         double q0;
@@ -218,5 +223,14 @@ public class SensorCalibrationUtils {
             }
         }
         return map;
+    }
+
+    public static double getNorm(double[] vector) {
+        var accumulator = 0.0;
+        for (int i = 0; i < vector.length; i++) {
+            var v = vector[i] * vector[i];
+            accumulator += v;
+        }
+        return Math.sqrt(accumulator);
     }
 }

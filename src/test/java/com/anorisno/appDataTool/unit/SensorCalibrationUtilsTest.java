@@ -240,7 +240,7 @@ class SensorCalibrationUtilsTest {
 
     @Test
     void csvWithoutHeaderKeepsFirstRecordAndAcceptsScientificNotation() throws IOException {
-        Path csv = writeCsv("TYPE_LINEAR_ACCELERATION;1e9;1e-3;-2e-3;3e-3\n");
+        Path csv = writeCsv("TYPE_LINEAR_ACCELERATION;1000000000;1e-3;-2e-3;3e-3\n");
         var records = SensorCalibrationUtils.parseCsvFile(csv.toFile());
         assertEquals(1, records.size());
         assertRecord(records.get(0), SensorData.SensorType.TYPE_LINEAR_ACCELERATION,

@@ -5,7 +5,7 @@ public record SensorData(
         Double x,
         Double y,
         Double z,
-        Double timestamp
+        Long timestamp
 ) {
 
     public double[] data() {

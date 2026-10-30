@@ -32,7 +32,8 @@ public class PrintSensorData
 //                "261013rest.csv"
 //                "261016rest_20261016_091632.csv"
 //                "261016rest2_20261016_092855.csv"
-                "261013forward1_20261013_193749.csv"
+//                "261013forward1_20261013_193749.csv"
+                "261013forward2_20261013_193900.csv"
 //                "rest_20261019_090413.csv"
 //                "rest-y-up_20261019_091114.csv"
 //                "20261020_restacc.csv"
@@ -40,7 +41,10 @@ public class PrintSensorData
 //                "20261020________1.csv"
                 ;
         var file = Path.of("/home/anorisno/work/git-hub-projects/appDataTool/experiments/" + filename).toFile();
-        var correctFilename = "261013rest.csv";
+        var correctFilename =
+//                "261016rest_20261016_091632.csv"
+                "261013rest.csv"
+                ;
         var correctFile = Path.of("/home/anorisno/work/git-hub-projects/appDataTool/experiments/" + correctFilename).toFile();
         var res = SensorCalibrationUtils.parseCsvFile(file);
         var calibrateData = SensorCalibrationUtils.parseCsvFile(correctFile);
